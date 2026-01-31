@@ -20,6 +20,42 @@ Guidelines:
 
 Remember: You're speaking to someone who is being vulnerable. Be gentle, supportive, and encouraging."""
 
+CRISIS_DETECTION_PROMPT = """You are a crisis detection system. Analyze the following message and determine if the user is expressing:
+- Suicidal thoughts or intentions
+- Self-harm thoughts or intentions
+- Immediate danger to themselves or others
+- Severe mental health crisis requiring immediate professional help
+
+Respond with ONLY "CRISIS" if ANY of these are present, or "OK" if the message does not indicate immediate crisis.
+
+Be sensitive - it's better to flag a potential crisis than miss one. However, general discussions about addiction, cravings, or feeling down are NOT crises unless they include explicit self-harm or suicidal content.
+
+Message to analyze:"""
+
+
+async def detect_crisis(user_message: str) -> bool:
+    """Detect if a message indicates a mental health crisis requiring immediate intervention."""
+    try:
+        response = await client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {
+                    "role": "user",
+                    "content": f"{CRISIS_DETECTION_PROMPT}\n\n{user_message}",
+                },
+            ],
+            max_tokens=10,
+            temperature=0,
+        )
+
+        result = response.choices[0].message.content.strip().upper()
+        return "CRISIS" in result
+
+    except Exception as e:
+        print(f"Crisis detection error: {e}")
+        # On error, don't flag as crisis to avoid false positives
+        return False
+
 
 async def generate_supportive_response(user_message: str, user_name: str = "friend") -> str:
     """Generate an empathetic, supportive response using GPT-4o-mini."""
@@ -43,3 +79,8 @@ async def generate_supportive_response(user_message: str, user_name: str = "frie
         print(f"OpenAI error: {e}")
         # Fallback response if API fails
         return f"Hey {user_name}, I hear you. Whatever you're going through right now, know that you're not alone. Take a deep breath - you've got this. I believe in you."
+
+
+async def generate_crisis_voice_response(user_name: str = "friend") -> str:
+    """Generate a compassionate voice response for crisis situations."""
+    return f"""{user_name}, I hear you, and I'm really glad you reached out. What you're feeling right now is serious, and you deserve immediate support from someone who can truly help. Please reach out to a crisis helpline right now - they're available 24/7 and they care. You matter, and there are people who want to help you through this. Please make that call."""

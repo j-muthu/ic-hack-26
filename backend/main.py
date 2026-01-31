@@ -15,7 +15,11 @@ from services.elevenlabs import generate_voice_message
 # ElevenLabs Conversational AI Agent ID
 ELEVENLABS_AGENT_ID = os.getenv("ELEVENLABS_AGENT_ID")
 WEBSITE_URL = os.getenv("WEBSITE_URL", "http://localhost:3000")
-from services.openai_service import generate_supportive_response
+from services.openai_service import (
+    generate_supportive_response,
+    detect_crisis,
+    generate_crisis_voice_response,
+)
 from services.telegram_service import (
     send_voice_message,
     send_text_message,
@@ -26,6 +30,23 @@ from services.telegram_service import (
 )
 
 WELCOME_MESSAGE = """Hey {name}, welcome to Kalm. I'm so glad you're here. I'm your personal recovery companion, available 24/7 whenever you need support. Whether you're feeling stressed, having cravings, or just need someone to talk to - I'm here for you. Just send me a message anytime, and I'll respond with a voice note. You've already taken a brave step by being here. You're not alone in this journey."""
+
+CRISIS_HELPLINES = """🆘 IMMEDIATE HELP AVAILABLE 🆘
+
+If you're in crisis, please reach out now:
+
+🇺🇸 USA: 988 (Suicide & Crisis Lifeline)
+🇬🇧 UK: 116 123 (Samaritans)
+🇨🇦 Canada: 1-833-456-4566
+🇦🇺 Australia: 13 11 14 (Lifeline)
+🇮🇪 Ireland: 116 123 (Samaritans)
+🌍 International: findahelpline.com
+
+You can also text:
+🇺🇸 Text HOME to 741741 (Crisis Text Line)
+🇬🇧 Text SHOUT to 85258
+
+These services are free, confidential, and available 24/7. You matter, and help is available right now. 💚"""
 
 
 async def process_telegram_message(chat_id: int, text: str, first_name: str = "friend"):
@@ -39,11 +60,10 @@ async def process_telegram_message(chat_id: int, text: str, first_name: str = "f
             )
             return
 
-        # 1. Send "Recording voice message..." immediately
-        await send_text_message(chat_id, "Recording voice message... 🎙️")
-
         # Handle /start command with voice welcome
         if text.startswith("/start"):
+            await send_text_message(chat_id, "Recording voice message... 🎙️")
+
             # Parse deep link parameter: "/start alcohol" → "alcohol"
             parts = text.split(maxsplit=1)
             recovery_type = parts[1] if len(parts) > 1 else None
@@ -60,15 +80,35 @@ async def process_telegram_message(chat_id: int, text: str, first_name: str = "f
             await send_voice_message(chat_id=str(chat_id), audio_bytes=audio_bytes)
             return
 
-        # 2. Generate AI response using OpenAI
+        # 1. Check for crisis/emergency situations FIRST
+        print(f"🔍 Checking for crisis indicators...")
+        is_crisis = await detect_crisis(text)
+
+        if is_crisis:
+            print(f"🚨 CRISIS DETECTED for {first_name}")
+
+            # Send emergency helplines TEXT MESSAGE immediately
+            await send_text_message(chat_id, CRISIS_HELPLINES)
+
+            # Then send a compassionate voice message
+            await send_text_message(chat_id, "Recording a message for you... 🎙️")
+            crisis_response = await generate_crisis_voice_response(first_name)
+            audio_bytes = generate_voice_message(crisis_response)
+            await send_voice_message(chat_id=str(chat_id), audio_bytes=audio_bytes)
+            return
+
+        # 2. Normal flow - send "Recording voice message..."
+        await send_text_message(chat_id, "Recording voice message... 🎙️")
+
+        # 3. Generate AI response using OpenAI
         print(f"🤖 Generating response for: {text[:50]}...")
         response_text = await generate_supportive_response(text, first_name)
         print(f"✅ Response generated: {response_text[:50]}...")
 
-        # 3. Convert to voice using ElevenLabs
+        # 4. Convert to voice using ElevenLabs
         audio_bytes = generate_voice_message(response_text)
 
-        # 4. Send voice message
+        # 5. Send voice message
         await send_voice_message(
             chat_id=str(chat_id),
             audio_bytes=audio_bytes,
