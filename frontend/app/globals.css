@@ -15,6 +15,7 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   min-height: 100vh;
+  background-size: 105%;
 }
 
 /* Dark green color from the Kalm branding */
