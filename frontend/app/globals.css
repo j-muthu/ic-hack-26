@@ -8,14 +8,28 @@
   font-style: normal;
 }
 
+html {
+  min-height: 100%;
+}
+
 body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: -5%;
+  left: -5%;
+  width: 110%;
+  height: 110%;
   background-image: url('/background.png');
   background-size: cover;
-  background-position: center;
+  background-position: center center;
   background-repeat: no-repeat;
-  background-attachment: fixed;
-  min-height: 100vh;
-  background-size: 105%;
+  z-index: -1;
 }
 
 /* Dark green color from the Kalm branding */
