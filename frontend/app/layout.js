@@ -1,7 +1,7 @@
 import './globals.css'
 
 export const metadata = {
-  title: 'KAlm - Your Recovery Companion',
+  title: 'Kalm - Your Recovery Companion',
   description: 'AI-powered support for addiction recovery',
 }
 

@@ -20,7 +20,7 @@ from services.telegram_service import (
     get_updates,
 )
 
-WELCOME_MESSAGE = """Hey {name}, welcome to KAlm. I'm so glad you're here. I'm your personal recovery companion, available 24/7 whenever you need support. Whether you're feeling stressed, having cravings, or just need someone to talk to - I'm here for you. Just send me a message anytime, and I'll respond with a voice note. You've already taken a brave step by being here. You're not alone in this journey."""
+WELCOME_MESSAGE = """Hey {name}, welcome to Kalm. I'm so glad you're here. I'm your personal recovery companion, available 24/7 whenever you need support. Whether you're feeling stressed, having cravings, or just need someone to talk to - I'm here for you. Just send me a message anytime, and I'll respond with a voice note. You've already taken a brave step by being here. You're not alone in this journey."""
 
 
 async def process_telegram_message(chat_id: int, text: str, first_name: str = "friend"):
@@ -125,7 +125,7 @@ async def lifespan(app: FastAPI):
     print("👋 Bot stopped")
 
 
-app = FastAPI(title="KAlm API", version="1.0.0", lifespan=lifespan)
+app = FastAPI(title="Kalm API", version="1.0.0", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
@@ -148,7 +148,7 @@ class SupportResponse(BaseModel):
 
 @app.get("/")
 async def root():
-    return {"message": "KAlm API is running"}
+    return {"message": "Kalm API is running"}
 
 
 @app.post("/api/telegram/webhook")

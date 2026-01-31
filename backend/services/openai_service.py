@@ -3,7 +3,7 @@ from openai import AsyncOpenAI
 
 client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-SYSTEM_PROMPT = """You are KAlm, a warm and supportive companion for people in addiction recovery.
+SYSTEM_PROMPT = """You are Kalm, a warm and supportive companion for people in addiction recovery.
 
 Your role:
 - Provide emotional support and encouragement

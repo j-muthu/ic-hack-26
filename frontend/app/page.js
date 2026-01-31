@@ -14,14 +14,14 @@ export default function Home() {
   const [selectedType, setSelectedType] = useState('')
 
   const telegramLink = selectedType
-    ? `https://t.me/KAlm_ai_bot?start=${selectedType}`
-    : 'https://t.me/KAlm_ai_bot'
+    ? `https://t.me/Kalm_ai_bot?start=${selectedType}`
+    : 'https://t.me/Kalm_ai_bot'
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center p-4">
       <div className="max-w-md w-full">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">KAlm</h1>
+          <h1 className="text-4xl font-bold text-white mb-2">Kalm</h1>
           <p className="text-white/80 text-lg">
             Your 24/7 recovery companion
           </p>
@@ -82,10 +82,10 @@ export default function Home() {
 
           <div className="mt-6 pt-6 border-t border-gray-100 text-center">
             <p className="text-sm text-gray-500 mb-3">
-              Already using KAlm?
+              Already using Kalm?
             </p>
             <a
-              href="https://t.me/KAlm_ai_bot"
+              href="https://t.me/Kalm_ai_bot"
               target="_blank"
               rel="noopener noreferrer"
               className="text-[#0088cc] hover:underline text-sm font-medium"
