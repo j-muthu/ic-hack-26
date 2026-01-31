@@ -18,14 +18,14 @@ I want to create a web app that helps recovering addicts. I want to use Elevenla
 Features:
 - 24/7 Elevenlabs therapist
 - Talk to your "future self" by using elevenlabs voice cloning
-- Provides affirmations (can whatsapp you them using the whatsapp API)
+- Provides daily affirmations using elevenlabs to generate a voice note that's then sent using the telegram bot api voice note function
 - Daily tracker and journalling
-- Connects with twilio to ring users at certain times of the day. Syncs with your calendar so that when you go to social events, it can ring you to check in (e.g. to stop a recovering alcoholic from feeling pressured to drink at a work social).
+- App syncs with your calendar so that when you go to social events, it can connect to an elevenlabs voice agent to generate a voice note, then send a telegram voice note or call you to provide you with support (e.g. to stop a recovering alcoholic from feeling pressured to drink at a work social).
 
 We want to create a web app using the following tech stack:
 - frontend: react/next.js for vercel deployment
 - python fastapi for the backend
-- connects to Twilio and Whatsapp for calls, voice notes, and messages
+- connect to telegram api bot https://core.telegram.org/bots/api#sendvoice
 - supabase database if necessary
 - elevenlabs for all voice technology
  
