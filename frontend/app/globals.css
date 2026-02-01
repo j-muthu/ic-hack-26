@@ -32,8 +32,9 @@ body::before {
   z-index: -1;
 }
 
-/* Dark green color from the Kalm branding */
+/* Kalm branding colors */
 :root {
-  --kalm-green: #3d5a3d;
-  --kalm-green-light: #4a6b4a;
+  --kalm-green: #284203;
+  --kalm-green-light: #d9e4bf;
+  --kalm-salmon: #e9d6c7;
 }
