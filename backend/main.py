@@ -146,6 +146,15 @@ Respond with warmth and encouragement, fulfilling their request. Start with "Hey
 
         # Handle /start command with voice welcome
         if text.startswith("/start"):
+            await send_text_message(
+                chat_id,
+                f"You're taking a powerful step by being here, {first_name} — that takes real courage. 💚\n\n"
+                "Here's what I can do for you:\n"
+                "/start — Start the bot and see this welcome message\n"
+                "/clone — Clone a voice (yours or a loved one's) for personalised encouragement\n"
+                "/personal — Hear a supportive message in your cloned voice\n"
+                "/call — Start a real-time voice conversation with Kalm"
+            )
             await send_text_message(chat_id, "Recording voice message... 🎙️")
 
             # Parse deep link parameter: "/start alcohol" → "alcohol"
