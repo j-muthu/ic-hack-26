@@ -1,6 +1,8 @@
 # Kalm
 
-Your 24/7 AI recovery companion. Get support through voice messages on Telegram or talk live in your browser.
+Your 24/7 AI addiction recovery companion. Get support through voice messages on Telegram or talk live in your browser. 
+
+Visit [kalm-support-app.vercel.app](https://kalm-support-app.vercel.app/).
 
 ## Getting Started
 
@@ -12,7 +14,7 @@ Your 24/7 AI recovery companion. Get support through voice messages on Telegram 
 
 ### Option 2: Live Voice Chat
 
-1. Visit [kalm.vercel.app/talk](https://kalm.vercel.app/talk)
+1. Visit [kalm-support-app.vercel.app/talk](https://kalm-support-app.vercel.app/talk)
 2. Click **Start Conversation**
 3. Allow microphone access when prompted
 4. Speak naturally - Kalm will listen and respond in real-time
